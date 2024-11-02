@@ -1,10 +1,11 @@
+
 let datasStatic = [];
 
 // Store restore
 // =========================================================
 (function automaticRestoringFromLocalStorage() {
     if (localStorage.getItem('datas')) {
-        console.log('Restored:', JSON.parse(localStorage.getItem('datas')));
+        // console.log('Restored:', JSON.parse(localStorage.getItem('datas')));
         datasStatic = JSON.parse(localStorage.getItem('datas'));
     }
 })();
@@ -15,8 +16,9 @@ function storingToLocalStorage(datasToStore) {
 
 // ========================================================
 function userDisplayer(datas) {
-    const usersGrid = document.querySelector('.users-grid-list');
+    usersListLoader.classList.add('hidden');
 
+    const usersGrid = document.querySelector('.users-grid-list');
     function clearAllChildren(element) {
         while (element.firstChild) {
             element.removeChild(element.firstChild);
@@ -99,22 +101,24 @@ function userDisplayer(datas) {
         usersGrid.appendChild(userInformations);
     }
 };
-userDisplayer(datasStatic)
+// userDisplayer(datasStatic)
 
 // Fetch
 // =========================================================
+const usersListLoader = document.getElementById('loading');
 function usersFetcher() {
+    usersListLoader.classList.remove('hidden');
     fetch('https://randomuser.me/api/?nat=fr&results=50')
         .then((response) => response.json())
         .then((data) => {
-            console.log(data.results);
+            // console.log(data.results);
             storingToLocalStorage(data.results);
             datasStatic = data.results;
             userDisplayer(data.results);
         })
         .catch((error) => console.log(error))
 };
-// usersFetcher();
+usersFetcher();
 
 // filter
 // ========================================================
@@ -177,7 +181,6 @@ function usersListSortingByName(filter, filterName, order) {
 
 // Search
 // =======================================================
-
 const usersSearchBar = document.getElementById('users-search_bar-input');
 usersSearchBar.addEventListener('input', usersSearchBarHandler);
 // function cleanString(str) {
@@ -206,7 +209,6 @@ usersSearchBar.addEventListener('input', usersSearchBarHandler);
 
 function usersSearchBarHandler(event) {
     const searchInput = event.target;
-
     let dataFiltered = datasStatic.filter((el) => {
         //  el.name.last.includes(event.target.value) 
         // If there is at least one space (so the split is trigered) and one more char (so the second elements of the array is not a blank space)
@@ -231,8 +233,7 @@ function usersSearchBarHandler(event) {
             }
         }
     });
-
-    userDisplayer(dataFiltered)
+    userDisplayer(dataFiltered);
 }
 
 
