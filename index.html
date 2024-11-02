@@ -201,81 +201,30 @@
     </div>
 
     <div class="users-container">
-      
+
       <div class="users-search_bar-container">
-        <img src="./images/search.svg" alt="search logo" width="20px"  class="users-search_bar-logo">
-        <input type="text" class="users-search_bar-input" placeholder="Search for a user">
+        <img src="./images/search.svg" alt="search logo" width="20px" class="users-search_bar-logo">
+        <input type="text" class="users-search_bar-input" id="users-search_bar-input" placeholder="Search for a user">
       </div>
 
       <h2 class="users-title">Database Results</h2>
 
       <div class="users-grid">
+        <div class="users-grid-filters">
 
-       <div class="users-grid-filters">
-        <h3 id="users-grid-filter-name">Name</h3>
-        <h3 id="users-grid-filter-email">Email</h3>
-        <h3 id="users-grid-filter-phone">Phone</h3>
-       </div>
-
-       <div class="users-grid-list">
-    
-        <div class="user user-informations">
-          <div class="user-profile-container">
-            <div class="user-profile_picture-container">
-              <img width="40px" src="./images/dashboard.svg" alt="profile picture of ${zozo}"
-                class="user-profile_picture-container">
-            </div>
-            <p class="user-name"><span class="user-last_name">Caron</span><span
-                class="user-first_name">Agathe</span>
-            </p>
+          <div>
+            <h3 tabindex="0" class="users-filters" id="users-grid-filter-name" data-sort-by="ascending">Name</h3>
           </div>
-          <div class="users-email-container">
-            <p>leonie.barbier@gmail.com</p>
+          <div>
+            <h3 tabindex="0" class="users-filters" id="users-grid-filter-email" data-sort-by="ascending">Email</h3>
           </div>
-          <div class="users-phone_number-container">
-            <p>05-26-85-79-68</p>
+          <div>
+            <h3 tabindex="0" class="users-filters" id="users-grid-filter-phone" data-sort-by="ascending">Phone</h3>
           </div>
-         </div>
-
-        <div class="user user-informations">
-          <div class="user-profile-container">
-            <div class="user-profile_picture-container">
-              <img width="40px" src="./images/dashboard.svg" alt="profile picture of ${zozo}"
-                class="user-profile_picture-container">
-            </div>
-            <p class="user-name"><span class="user-last_name">Caron</span><span
-                class="user-first_name">Agathe</span>
-            </p>
-          </div>
-          <div class="users-email-container">
-            <p>Agathe.caron@nono.no</p>
-          </div>
-          <div class="users-phone_number-container">06-06-58-58-58</div>
-         </div>
-
-        <div class="user user-informations">
-          <div class="user-profile-container">
-            <div class="user-profile_picture-container">
-              <img width="40px" src="./images/dashboard.svg" alt="profile picture of ${zozo}"
-                class="user-profile_picture-container">
-            </div>
-            <p class="user-name"><span class="user-last_name">Lucas</span><span
-                class="user-first_name">Romy</span>
-            </p>
-          </div>
-          <div class="users-email-container">
-            <p>lucas.roro@hotmail.fr</p>
-          </div>
-          <div class="users-phone_number-container">
-            <p>05-34-46-19-02</p>
-          </div>
-         </div>
-
         </div>
-
-
+        <div class="users-grid-list">
+        </div>
       </div>
-
     </div>
 
   </main>
