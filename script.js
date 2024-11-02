@@ -1,19 +1,6 @@
 
 let datasStatic = [];
 
-// Store restore
-// =========================================================
-(function automaticRestoringFromLocalStorage() {
-    if (localStorage.getItem('datas')) {
-        // console.log('Restored:', JSON.parse(localStorage.getItem('datas')));
-        datasStatic = JSON.parse(localStorage.getItem('datas'));
-    }
-})();
-
-function storingToLocalStorage(datasToStore) {
-    localStorage.setItem('datas', JSON.stringify(datasToStore));
-}
-
 // ========================================================
 function userDisplayer(datas) {
     usersListLoader.classList.add('hidden');
@@ -112,7 +99,7 @@ function usersFetcher() {
         .then((response) => response.json())
         .then((data) => {
             // console.log(data.results);
-            storingToLocalStorage(data.results);
+            // storingToLocalStorage(data.results);
             datasStatic = data.results;
             userDisplayer(data.results);
         })
@@ -183,54 +170,21 @@ function usersListSortingByName(filter, filterName, order) {
 // =======================================================
 const usersSearchBar = document.getElementById('users-search_bar-input');
 usersSearchBar.addEventListener('input', usersSearchBarHandler);
-// function cleanString(str) {
-//     const replacements = {
-//       'ç': 'c',
-//       'ö': 'o',
-//       'ü': 'u',
-//       'é': 'e',
-//       'è': 'e',
-//       'ê': 'e',
-//       'â': 'a',
-//       'ä': 'a',
-//       'ã': 'a',
-//       'å': 'a',
-//       'î': 'i',
-//       'í': 'i',
-//       'ï': 'i',
-//       'ô': 'o',
-//       'ñ': 'n',
-//     };
-
-//   return str.split('').map(char => replacements[char] || char).join('');
-// }  
-// let valueOneCleansed = cleanString(searchInput.value.split(' ')[0]);
-// let valueTwoCleansed = cleanString(searchInput.value.split(' ')[1]);
 
 function usersSearchBarHandler(event) {
     const searchInput = event.target;
+    const searchValue = searchInput.value.toLowerCase().replace(/\s+/g, '')
+
     let dataFiltered = datasStatic.filter((el) => {
-        //  el.name.last.includes(event.target.value) 
-        // If there is at least one space (so the split is trigered) and one more char (so the second elements of the array is not a blank space)
-        if (searchInput.value.split(' ').length == 2 && searchInput.value.split(' ')[1].length > 0) {
+        const lastName = el.name.last.toLowerCase();
+        const firstName = el.name.first.toLowerCase();
+        const fullNameCase1 = el.name.last.toLowerCase() + el.name.first.toLowerCase();
+        const fullNameCase2 = el.name.first.toLowerCase() + el.name.last.toLowerCase();
 
-            //   DIDN'T WORK  // If lastName include search.value[0] or [1], AND lastName include search.value[0] or [1] didn't work...
-            //   DIDN'T WORK    // if(el.name.last.toLowerCase().includes(searchInput.value.split(' ')[0].toLowerCase()) || el.name.last.toLowerCase().includes(searchInput.value.split(' ')[1].toLowerCase()) && el.name.first.toLowerCase().includes(searchInput.value.split(' ')[0].toLowerCase()) || el.name.first.toLowerCase().includes(searchInput.value.split(' ')[1].toLowerCase())){
-
-            // If lastName include search.value[0] and firstName  include search.value[1]
-            if (el.name.last.toLowerCase().includes(searchInput.value.split(' ')[0].toLowerCase()) && el.name.first.toLowerCase().includes(searchInput.value.split(' ')[1].toLowerCase())) {
-                return el
-                // Else If lastName include search.value[1] and firstName  include search.value[0]
-            } else if (el.name.last.toLowerCase().includes(searchInput.value.split(' ')[1].toLowerCase()) && el.name.first.toLowerCase().includes(searchInput.value.split(' ')[0].toLowerCase())) {
-                return el
-            }
-        } else {
-
-            // If lastName OR first name include search.value, trigger
-            if (el.name.last.toLowerCase().includes(searchInput.value.split(' ')[0].toLowerCase()) || el.name.first.toLowerCase().includes(searchInput.value.split(' ')[0].toLowerCase())) {
-                // return el.name.last.toLowerCase().includes(searchInput.value.toLowerCase())
-                return el
-            }
+        if (fullNameCase1.includes(searchValue) || fullNameCase2.includes(searchValue)) {
+            return el
+        } else if (lastName.includes(searchValue) || firstName.includes(searchValue)) {
+            return el
         }
     });
     userDisplayer(dataFiltered);
